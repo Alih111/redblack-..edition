@@ -60,7 +60,9 @@ class RBTree:
             elif data < node.data:
                 left=True
                 right=False
-                node=node.left
+                node=node.left     #do not add repeated
+            elif data == node.data:
+                break
         newNode=Node(data)
         newNode.parent=parent
         if left:
