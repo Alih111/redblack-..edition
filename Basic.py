@@ -51,16 +51,26 @@ class RBTree:
             a=Node(data)
             return a
         parent=node
-        while node != None:
+        while node is not None:
+           #print("while")
             parent=node
             if data > node.data:
+                # print("pppp")
                 right=True
                 left=False
-                node=node.right
+                node = node.right
+                # if node is not None:
+                #     print(f"{node.data} is here " )
+                #     print("None")
             elif data < node.data:
+                # print("rrrrrrr")
                 left=True
                 right=False
                 node=node.left
+            elif data == node.data:
+                return self.root
+
+
         newNode=Node(data)
         newNode.parent=parent
         if left:
@@ -76,6 +86,7 @@ class RBTree:
             if node.parent.parent.left == node.parent:  # uncle on the right
                 uncle = node.parent.parent.right
                 if uncle is not None and uncle.black == False:  # uncle is red
+                    # print(1234)
                     node.parent.black = not (node.parent.black)
                     uncle.black = not uncle.black
                     node.parent.parent.black = not node.parent.parent.black
@@ -83,28 +94,36 @@ class RBTree:
                 else:  # uncle is black and its on the right and node is on the left of parent
                     if node == node.parent.right:
                         node = node.parent
+                        # print(111)
                         self.rotate_left(node)
 
                     node.parent.black = True
                     node.parent.parent.black = False
+                    # print(5)
                     self.rotate_right(node.parent.parent)
+
                     # swap color
                     # break;
             else:
+                # print(47892)
                 uncle = node.parent.parent.left
                 if uncle != None and node.parent.black == False:
                     node.parent.black = not (node.parent.black)
                     uncle.black = not uncle.black
                     node.parent.parent.black = not node.parent.parent.black
                     node = node.parent.parent
+
                 else:  # uncle is red and its on the right
                     # case 2b: uncle node is black
                     if node == node.parent.left:
+                        # print(8)
                         self.rotate_right(node.parent)
 
                     node.parent.color = True
                     node.parent.parent.color = False
+                    # print(999)
                     self.rotate_left(node.parent.parent)
+
 
     def rotate_right(self, node):
         left_child = node.left
@@ -116,7 +135,7 @@ class RBTree:
         left_child.parent = node.parent
 
         if node.parent is None:
-            root = left_child
+            self.root = left_child
         elif node == node.parent.right:
             node.parent.right = left_child
         else:
@@ -127,6 +146,8 @@ class RBTree:
 
     def rotate_left(self, node):
         right_child = node.right
+        if right_child is None:
+            return
         node.right = right_child.left
 
         if right_child.left is not None:
@@ -135,7 +156,7 @@ class RBTree:
         right_child.parent = node.parent
 
         if node.parent is None:
-            root = right_child
+            self.root = right_child
         elif node == node.parent.left:
             node.parent.left = right_child
         else:
@@ -164,29 +185,32 @@ a=RBTree()
 #
 # # a.insert("h")
 # # print(a.root.right.left.data)
-
 f = open("egr.txt","r")
 
 for line in f:
-     print(line)
-     a.insert(line)
+    if line != None:
+        print(line)
+        a.insert(line)
 f.close()
 
 
 print(a.size_of_tree(a.root))
 print(a.height_of_tree(a.root))
 
+#print(a.root.right.right.data) ##!!!!!!!!! if there is a repeated elements it will not be added to the tree
+# print(a.size_of_tree(a.root)) # dictionary size is the number of elements
+# word = input("enter a word to Insert it") #INsert word if it is not int hte dictionary
+# if a.search(word) is not None:
+#     messagebox.showinfo("showinfo", f"The word {word} is already in the dictionary can't insert it!")
+# else:
+#     a.insert(word)
+#
+# word = input("enter a word to check if it is in tree or not") #Make sure a specific word in the dictionary
+# if a.search(word) is not None:
+#     messagebox.showinfo("showinfo", f"The word {word} is in the dictionary!")
+# else:
+#     messagebox.showinfo("showinfo", f"The word {word} is not in the dictionary!")
 
-print(a.size_of_tree(a.root)) # dictionary size is the number of elements
-word = input("enter a word to Insert it") #INsert word if it is not int hte dictionary
-if a.search(word) is not None:
-    messagebox.showinfo("showinfo", f"The word {word} is already in the dictionary can't insert it!")
-else:
-    a.insert(word)
-
-word = input("enter a word to check if it is in tree or not") #Make sure a specific word in the dictionary
-if a.search(word) is not None:
-    messagebox.showinfo("showinfo", f"The word {word} is in the dictionary!")
 
 
 
