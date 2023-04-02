@@ -187,6 +187,9 @@ else:
 word = input("enter a word to check if it is in tree or not") #Make sure a specific word in the dictionary
 if a.search(word) is not None:
     messagebox.showinfo("showinfo", f"The word {word} is in the dictionary!")
+else:
+    messagebox.showinfo("showinfo", f"The word {word} is not in the dictionary!")
+
 
 
 
