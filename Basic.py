@@ -177,6 +177,7 @@ f.close()
 
 
 print(a.size_of_tree(a.root))
+
 print(a.height_of_tree(a.root))
 
 
