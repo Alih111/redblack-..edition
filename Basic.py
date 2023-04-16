@@ -74,42 +74,36 @@ class RBTree:
 
     def fixupRedBlackTree(self, node):
         self.root.black = True
-        while node.parent is not None and node.parent.black == False:  # case 1 uncle is red
-
+        while node.parent is not None and node.parent.black == False:
             if node.parent.parent.left == node.parent:  # uncle on the right
                 uncle = node.parent.parent.right
-                if uncle is not None and uncle.black == False:  # uncle is red
+                if uncle is not None and uncle.black == False:  # case 1: uncle is red
                     node.parent.black = not node.parent.black
                     uncle.black = not uncle.black
                     node.parent.parent.black = not node.parent.parent.black
                     node = node.parent.parent
-                else:  # uncle is black and its on the right and node is on the left of parent
+                else:  # case 2: uncle is black and on the right
                     if node == node.parent.right:
-                        # node = node.parent
-                        self.rotate_left(node.parent)
-
+                        node = node.parent
+                        self.rotate_left(node)
                     node.parent.black = not node.parent.black
                     node.parent.parent.black = not node.parent.parent.black
                     self.rotate_right(node.parent.parent)
-                    # swap color
-                    # break;
-            else:
+            else:  # uncle on the left
                 uncle = node.parent.parent.left
-                if uncle != None and uncle.black == False:
+                if uncle is not None and uncle.black == False:  # case 1: uncle is red
                     node.parent.black = not node.parent.black
                     uncle.black = not uncle.black
                     node.parent.parent.black = not node.parent.parent.black
                     node = node.parent.parent
-                else:  # uncle is red and its on the right
-                    # case 2b: uncle node is black
+                else:  # case 2: uncle is black and on the left
                     if node == node.parent.left:
-                        self.rotate_right(node.parent)
-
-                    node.parent.color = not node.parent.black
-                    node.parent.parent.color = not node.parent.parent.black
+                        node = node.parent
+                        self.rotate_right(node)
+                    node.parent.black = not node.parent.black
+                    node.parent.parent.black = not node.parent.parent.black
                     self.rotate_left(node.parent.parent)
         self.root.black = True
-
 
     def rotate_right(self, node):
         left_child = node.left
