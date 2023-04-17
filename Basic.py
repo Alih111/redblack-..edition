@@ -1,4 +1,9 @@
+from tkinter import *
+from tkinter import simpledialog
 from tkinter import messagebox
+
+messageNode = Tk()
+messageNode.withdraw()
 class Node:
     def __init__(self,data):
         self.data=data
@@ -33,7 +38,7 @@ class RBTree:
     def _height_recursive(self,root):
 
         if root is None:
-            return -1
+            return 0
 
         left_height = self._height_recursive(root.left)
         right_height = self._height_recursive(root.right)
@@ -147,78 +152,46 @@ class RBTree:
         self.root = self.insert_recursive(data, self.root)
         self.root.black = True
 
-# a=RBTree()
-#
-#
-# f = open("egr.txt","r")
-#
-# for line in f:
-#      print(line)
-#      a.insert(line)
-# f.close()
-#
-#
-# print(a.size_of_tree(a.root))
-#
-# print(a.height_of_tree(a.root))
-#
-#
-# print(a.size_of_tree(a.root)) # dictionary size is the number of elements
-# word = input("enter a word to Insert it") #INsert word if it is not int hte dictionary
-# if a.search(word) is  None:
-#     print(a.search(line).data)
-#     messagebox.showinfo("showinfo", f"The word {word} is already in the dictionary can't insert it!")
-# else:
-#     print(111111111)
-#     a.insert(word)
-#
-# word = input("enter a word to check if it is in tree or not") #Make sure a specific word in the dictionary
-# if a.search(word) is not None:
-#     messagebox.showinfo("showinfo", f"The word {word} is in the dictionary!")
-
-
 
 a=RBTree()
+# messageNode.mainloop()
 while (1):
-    choice =input("write the number of your choice\n 1-Load Dictionary   \n 2-insert a word \n 3-search for a word \n 4-return RB tree height \n 5- return RB tree size\n 6-exit \n")
+    choice =simpledialog.askstring(title="Choice", prompt="write the number of your choice\n 1-Load Dictionary   \n 2-insert a word \n 3-search for a word \n 4-return RB tree height \n 5- return RB tree size\n 6-exit \n")
     if choice =='1':
-        f = open("test.txt", "r")
+        f = open("egr.txt", "r")
 
         for line in f:
             a.insert(line)
         f.close()
     elif choice == '2':
-        f = open("test.txt","a")
-        word = input("enter a word to Insert it \n   ") #INsert word if it is not int hte dictionary
+        f = open("egr.txt","a")
+        word = simpledialog.askstring(title="Choice",prompt="enter a word to Insert it \n ") #INsert word if it is not int hte dictionary
         if a.search(word) is not None:
-            print( f"The word {word} is already in the dictionary can't insert it!")
+            messagebox.showinfo( "Inserting Result",f"The word {word} is already in the dictionary can't insert it!",parent =messageNode)
         else:
             a.insert(word)
             f.write("\n")
             f.write(word)
-            print("inserted successfully")
+            messagebox.showinfo("inserted successfully",parent =messageNode)
         f.close()
 
     elif choice == "3":
-        word = input("enter a word to check if it is in tree or not\n") #Make sure a specific word in the dictionary
+        word = simpledialog.askstring(title="Choice",prompt="enter a word to check if it is in tree or not\n") #Make sure a specific word in the dictionary
         if a.search(word) is not None:
-           print( f"The word {word} is in the dictionary!")
+            messagebox.showinfo("Searching Result",f"The word {word} is in the dictionary!",parent =messageNode)
         else:
-            print( f"it is not in the dictionary")
+            messagebox.showinfo( "Searching Result",f"it is not in the dictionary",parent =messageNode)
 
 
     elif choice == "4":
-        print("hight of the tree is = ",end="")
-        print(a.height_of_tree(a.root))
+        height = a.height_of_tree(a.root)
+        print(height)
+        height += 1        # increase one due to null nodes!
+        print(height)
+        messagebox.showinfo("Height result",f"height of the tree is = {height}",parent =messageNode)
 
     elif choice == "5":
-        print(a.size_of_tree(a.root))
+        messagebox.showinfo("Size result",f"Size of the tree = {a.size_of_tree(a.root)}",parent =messageNode)
     elif choice =="6":
         break
     print("\n\n")
-
-
-
-
-
-print(a.root.left.data)
